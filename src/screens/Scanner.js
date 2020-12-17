@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 
-export default function Scanner(){
+export default function Scanner({navigation}){
 
         const [hasPermission, setHasPermission] = useState(null);
         const [scanned, setScanned] = useState(false);
@@ -21,7 +21,7 @@ export default function Scanner(){
       
         const handleBarCodeScanned = ({ type, data }) => {
           setScanned(true);
-          alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+          navigation.navigate("MemberProfile")
         };
       
         if (hasPermission === null) {
@@ -41,14 +41,18 @@ export default function Scanner(){
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
 
       
-          <MaterialCommunityIcons style={styles.icon} name="window-close" size={24} color="white  " />
+           <MaterialCommunityIcons style={styles.icon} name="window-close" size={24} color="white" />
 
 
     </View>
 
     <View style={styles.redContainer}>
           <View><Text style={styles.topText}>Want to share your contact?</Text></View>
-          <View style={styles.text}><Text>Send QR</Text></View>
+          <TouchableOpacity 
+            onPress={()=>{
+              navigation.navigate("QrScreen")
+          }} 
+          style={styles.text}><Text>Send QR</Text></TouchableOpacity>
     </View>
            
 

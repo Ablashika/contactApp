@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList,  
 } from 'react-native';
-import hair from "./assets/hair.jpg"
+import hair from "../../assets/hair.jpg"
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -15,10 +15,10 @@ export default function Profile (){
      <View style={styles.container}> 
 
            
-        <View style={styles.redContainer}>
+        {/* <View style={styles.redContainer}>
         <Ionicons  style={styles.icon}  style={styles.icon}name="ios-arrow-round-back" size={30} color="white"   />
            <Text style={styles.topText}>Profile</Text></View>
-            <View style={styles.redContainerTwo}></View>  
+            <View style={styles.redContainerTwo}></View>   */}
 
         <View style={styles.imageBox} >
             <View style={styles.itemImage}><Image source={hair}  style={styles.image}/>

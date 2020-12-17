@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList,  
 } from 'react-native';
-import office from "./assets/office.jpg"
+import office from "../../assets/office.jpg"
 
 
-export default function NextScreen (){
+export default function HomeScreen ({navigation}){
 
     return(
         <View style={styles.container}> 
@@ -21,10 +21,18 @@ export default function NextScreen (){
 
            <View style={styles.buttomTextBox}>
 
-               <TouchableOpacity><Text style={styles.registerTex}>REGISTER</Text>
+               <TouchableOpacity
+                onPress={()=>{
+                    navigation.navigate("Register")
+                }} 
+               ><Text style={styles.registerTex}>REGISTER</Text>
                <View style={styles.redContainer}></View>
                </TouchableOpacity>
-                <TouchableOpacity><Text style={styles.signUpText}>SIGN IN</Text>
+                <TouchableOpacity
+                 onPress={()=>{
+                    navigation.navigate("SignIn")
+                }} 
+                ><Text style={styles.signUpText}>SIGN IN</Text>
                 <View style={styles.redContainerTwo}></View>
                 </TouchableOpacity>
            </View>
@@ -95,3 +103,4 @@ const styles = StyleSheet.create({
     }
     
 })
+

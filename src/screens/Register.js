@@ -1,16 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList, Button, Platform, ImageBackground, ScrollView
+import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList, Button, Platform, ImageBackground, ScrollView, SafeAreaView
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
- 
+import {connect} from 'react-redux'
+import {createEmailAccount} from '../redux/actions/authActions'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 
 
 
-export default function Register (){
-    const [image, setImage] = useState(null);
+
+
+ function Register ({navigation, createEmailAccount}){
+
+    const [details, setDetails] = useState({
+      fullname:"",
+      email:"",
+      phonenumber:"",
+      role:"",
+      twitter:"",
+      linkedIn:"",
+      password:"",
+   });
+  
+
+   const handleUpdateState = (name, value)=>{
+     setDetails({...details, [name]:value})
+   }
+
+   const handleOnsubmit = () =>{
+      createEmailAccount(details.email, details.password)
+   }
+  
+
+      const [image, setImage] = useState(null);
 
     useEffect(() => {
       (async () => {
@@ -39,13 +64,19 @@ export default function Register (){
     };
 
     return(
+      <SafeAreaView>
+        <KeyboardAwareScrollView>
+          <ScrollView>
+
+        
         <View style={styles.container}> 
 
 
            
-                 <View style={styles.redContainer}>
+                 {/* <View style={styles.redContainer}>
                  <Ionicons  style={styles.icon}  style={styles.icon}name="ios-arrow-round-back" size={30} color="white"   />
-                    <Text style={styles.topText}>Register</Text></View>
+                    <Text style={styles.topText}>Register</Text></View> */}
+
              <View style={styles.redContainerTwo}></View>   
            
 
@@ -72,8 +103,9 @@ export default function Register (){
                         placeholderTextColor="#aaaaaa"
                         placeholder ="fullname"
                         textAlign="right"
-                       
-
+                        value={details.fullname}
+                        onChangeText={(text)=>{
+                          handleUpdateState('fullname',text)}}
                         >  
                 </TextInput>
               </View>
@@ -84,10 +116,13 @@ export default function Register (){
                <View style={styles.textBox}> 
                  <TextInput
                         style={styles.input} 
-                       
                         placeholderTextColor="#aaaaaa"
                          placeholder ="Email"
-                         textAlign="right" >  
+                         textAlign="right"
+                         value={details.email}
+                         onChangeText={(text)=>{
+                          handleUpdateState('email',text)}}
+                         >  
                 </TextInput>
               </View>  
             </View>
@@ -100,10 +135,13 @@ export default function Register (){
                
                     <TextInput
                         style={styles.input} 
-                       
                         placeholderTextColor="#aaaaaa"
                         placeholder ="phone number"
-                        textAlign="right" >  
+                        textAlign="right"
+                        valu={details.phonenumber}
+                        onChangeText={(text)=>{
+                          handleUpdateState('phoneBNumber',text)}}
+                        >  
                     </TextInput>
                   </View>
                </View>
@@ -112,10 +150,13 @@ export default function Register (){
                 <View style={styles.textBox}> 
                   <TextInput
                         style={styles.input} 
-                       
+                        value={details.role}
                         placeholderTextColor="#aaaaaa"
                         placeholder ="Role"
-                        textAlign="right" >  
+                        textAlign="right"
+                        onChangeText={(text)=>{
+                         handleUpdateState('role',text)}}
+                        >  
                   </TextInput>
                 </View>
              </View>
@@ -125,10 +166,13 @@ export default function Register (){
                <View style={styles.textBox}> 
                  <TextInput
                         style={styles.input} 
-                       
+                        value={details.twitter}
                         placeholderTextColor="#aaaaaa"
                         placeholder ="Twitter" 
-                        textAlign="right">  
+                        textAlign="right"
+                        onChangeText={(text)=>{
+                         handleUpdateState('twitter',text)}}
+                        >  
                   </TextInput>
                </View>
              </View>
@@ -138,10 +182,31 @@ export default function Register (){
                
                 <TextInput
                         style={styles.input} 
-                       
+                        value={details.linkedIn}
                         placeholderTextColor="#aaaaaa"
                         placeholder ="" 
-                        textAlign="right">  
+                        textAlign="right"
+                        onChangeText={(text)=>{
+                         handleUpdateState('linkedIn',text)}}
+                        >  
+                </TextInput>
+
+             </View>
+            </View>
+            <View  style={styles.details}>
+             <View style={styles.textContainer}><Text  style={styles.textDetails}>password</Text></View>
+             <View style={styles.textBox}> 
+               
+                <TextInput
+                        style={styles.input} 
+                        value={details.password}
+                        placeholderTextColor="#aaaaaa"
+                        placeholder ="" 
+                        textAlign="right"
+                        secureTextEntry={true}
+                        onChangeText={(text)=>{
+                         handleUpdateState('password',text)}}
+                        >  
                 </TextInput>
 
              </View>
@@ -150,12 +215,18 @@ export default function Register (){
                       
          </View>
       
-         <TouchableOpacity style={styles.boxRegister}><Text>Register</Text></TouchableOpacity>
+         <TouchableOpacity 
+          onPress={
+            handleOnsubmit
+        } 
+         style={styles.boxRegister}><Text>Register</Text></TouchableOpacity>
        
 
         </View>
 
-
+        </ScrollView>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     )
 }
 
@@ -249,3 +320,9 @@ const styles = StyleSheet.create({
 
     
 })
+
+
+const mapStateToProps = (state) => {
+  return {auth:state}
+} 
+export default connect(mapStateToProps,{createEmailAccount})(Register)

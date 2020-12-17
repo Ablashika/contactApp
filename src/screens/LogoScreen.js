@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList,  
 } from 'react-native';
-import codetrain from  './assets/codetrain.png'
+import codetrain from  '../../assets/codetrain.png'
 
-export default function LogoScreen (){
+export default function LogoScreen ({navigation}){
 
     return(
         <View style={styles.container}> 
@@ -19,10 +19,14 @@ export default function LogoScreen (){
                 
              </View>
 
-            <View style={styles.lastBox}><Text style={styles.textTwo}>Get Started</Text>
+            <TouchableOpacity
+            onPress={()=>{
+                navigation.navigate("HomeScreen")
+            }} 
+            style={styles.lastBox} 
+            ><Text style={styles.textTwo}>Get Started</Text>
                  <View style={styles.redContainerTwo}></View>
-            
-            </View>
+            </TouchableOpacity>
         </View>
 
 

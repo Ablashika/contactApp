@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList,  
 } from 'react-native';
-import hair from "./assets/hair.jpg"
+import hair from "../../assets/hair.jpg"
 import { Ionicons } from '@expo/vector-icons';
 import { QRCode } from 'react-native-custom-qr-codes-expo';
 
@@ -10,16 +10,17 @@ import { QRCode } from 'react-native-custom-qr-codes-expo';
 
 
 
-export default function QrScreen (){
+
+export default function QrScreen ({navigation}){
 
     return(
      <View style={styles.container}> 
 
            
-        <View style={styles.redContainer}>
-        <Ionicons  style={styles.icon}  style={styles.icon}name="ios-arrow-round-back" size={30} color="white"   />
+        {/* <View style={styles.redContainer}>
+        <Ionicons  style={styles.icon}  style={styles.icon}name="ios-arrow-round-back" size={30} color="white"/>
            <Text style={styles.topText}>QrScreen</Text></View>
-            <View style={styles.redContainerTwo}></View> 
+            <View style={styles.redContainerTwo}></View>  */}
 
 
             <View style={styles.textBox}>
@@ -45,7 +46,11 @@ export default function QrScreen (){
 
             <View style={styles.bottomBox}>
                 <View><Text>want to add a new connection?</Text></View> 
-                <View style={styles.scanBox}><Text style={styles.qrText}>Send QR</Text></View>
+                <TouchableOpacity 
+                 onPress={()=>{
+                    navigation.navigate("Scanner")
+                }} 
+                style={styles.scanBox}><Text style={styles.qrText}>Send QR</Text></TouchableOpacity>
                
                 </View>
          

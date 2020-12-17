@@ -1,37 +1,23 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import LogoScreen from './LogoScreen'
-import NextScreen from './NextScreen'
-import SignIn from './SignIn';
-import Register from './Register'
-import MemberProfile from './MemberProfile';
-import Profile from './Profile';
-import QrScreen from './QrScreen';
-import Scanner from './Scanner'
+import {Provider} from 'react-redux'
+import AppContainer from './src/navigation/navigation';
+import {store,persistor }from './src/redux/store'
+import {PersistGate} from 'redux-persist/integration/react'
 
 
-class App extends Component {
-render(){       
+class App extends Component { 
+render(){  
   return(
-    <View style={styles.container}>
-   <Scanner/>
-    </View>
+    <Provider store={store}>
+       <PersistGate loading={null} persistor={persistor}></PersistGate>
+       <AppContainer/>
+    </Provider>
   )
 }
 
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-
-});
 
 
 export default App

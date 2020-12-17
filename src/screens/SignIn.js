@@ -1,21 +1,40 @@
-import React from 'react'
+import React, { useState,} from 'react';
 import { StyleSheet, Text, View, Image,TextInput, TouchableOpacity, FlatList,  
 } from 'react-native';
-import whitegreen from "./assets/whitegreen.jpg"
+import whitegreen from "../../assets/whitegreen.jpg"
+import {connect} from 'react-redux'
+import {loginEmailAccount} from '../redux/actions/authActions'
+
+
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default function SignIn (){
+function SignIn ({navigation, loginEmailAccount}){
+
+    
+    const [details, setDetails] = useState({
+        email:"",
+        password:"",
+     });
+    
+  
+     const handleUpdateState = (name, value)=>{
+       setDetails({...details, [name]:value})
+     }
+  
+     const handleOnsubmit = () =>{
+        loginEmailAccount(details.email, details.password)
+     }
 
     return(
         <View style={styles.container}>
 
 
 
-               <View style={styles.redContainer}>
+               {/* <View style={styles.redContainer}>
                <Ionicons  style={styles.icon}name="ios-arrow-round-back" size={30} color="white"   />
                     <Text style={styles.topText}>Sign In</Text> 
-                </View>
+                </View> */}
 
                <View style={styles.imageBox}>
                    <Image source={whitegreen} style={styles.image}/>
@@ -25,10 +44,15 @@ export default function SignIn (){
                <View style={styles.Email}>    
                <Text style={styles.textEmail}>Email</Text>
                 <TextInput
-                        style={styles.input} 
-                       
+                        style={styles.input}  
                         placeholderTextColor="#aaaaaa"
-                        placeholder ="hjjhg" >  
+                        placeholder ="email"
+                        textAlign="right"
+                        value={details.email}
+                        onChangeText={(text)=>{
+                         handleUpdateState('email',text)}}
+                      
+                        >  
                 </TextInput>
                </View>
 
@@ -37,12 +61,20 @@ export default function SignIn (){
                <TextInput  style={styles.input}
                  placeholderTextColor="#aaaaaa"
                 secureTextEntry={true}
-                placeholder= "paassword">
+                placeholder= "paassword"
+                textAlign="right"
+                value={details.password}
+                onChangeText={(text)=>{
+                 handleUpdateState('password',text)}}
+              
+                >
                </TextInput>
                </View>
 
 
-               <TouchableOpacity style={styles.signinContainer}><Text style={styles.signInText}>SIGN IN</Text></TouchableOpacity>
+               <TouchableOpacity 
+                 onPress={handleOnsubmit} 
+               style={styles.signinContainer}><Text style={styles.signInText}>SIGN IN</Text></TouchableOpacity>
 
 
                <View style={styles.forgotContainer}>
@@ -91,18 +123,18 @@ flex:1
 },
 
 Email:{
-    flexDirection:"row",
+    // flexDirection:"row",
     marginBottom:30,
 },
 
 
 password:{
-    flexDirection:"row",
-    marginRight:50
+    // flexDirection:"row",
+    // marginRight:50
 },
 
 textEmail:{
-    marginRight:50
+    // marginRight:50
 },
 
 textPassword:{
@@ -111,7 +143,7 @@ textPassword:{
 
 details:{
     flex:4,
-    marginTop:100,
+    marginTop:80,
     width:330,
    
 
@@ -156,3 +188,12 @@ topText:{
 }
 
 })
+
+
+const mapStateToProps = (state) => {
+   
+
+        return {auth:state}
+    
+  } 
+  export default connect(mapStateToProps,{loginEmailAccount})(SignIn)
